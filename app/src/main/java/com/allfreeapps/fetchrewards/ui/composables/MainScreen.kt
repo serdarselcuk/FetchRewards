@@ -83,7 +83,7 @@ class MainScreen {
         }
     }
 
-    private @Composable
+    @Composable
     fun MessageRow(reward: Reward) {
         Row {
             Text(text = "Name: ${reward.name}, Id: ${reward.id}, ListId: ${reward.listId}")
