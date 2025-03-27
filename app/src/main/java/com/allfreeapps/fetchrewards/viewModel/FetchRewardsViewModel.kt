@@ -14,23 +14,29 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 import java.io.IOException
 
-class FetchRewardsViewModel: ViewModel() {
-    private var _rewardsResponse = MutableLiveData<List<Reward>?>()
-    val rewardsResponse: LiveData<List<Reward>?> = _rewardsResponse
+open class FetchRewardsViewModel : ViewModel() {
 
-    fun getRewards(){
-        val retrofitClientService = ServiceClient().createRetrofit(URL).create(ApiPlaceHolder::class.java)
+    private var _rewardsResponse = MutableLiveData<List<Reward>?>()
+    open val rewardsResponse: LiveData<List<Reward>?> = _rewardsResponse
+
+    private var _errorResponse = MutableLiveData<String>()
+    open val errorResponse: LiveData<String> = _errorResponse
+
+
+    fun getRewards() {
+        val retrofitClientService =
+            ServiceClient().createRetrofit(URL).create(ApiPlaceHolder::class.java)
         viewModelScope.launch {
             val rewardsRequest = retrofitClientService.getRewards()
             try {
-                val response = rewardsRequest?.awaitResponse()
-                if (response?.isSuccessful == true)
-                _rewardsResponse.postValue(
-                    response?.body() ?: throw IOException("Response body is null")
-                )
-            }catch (e:Exception){
-                Log.e("GET_REWARDS_SERVICE",e.message.toString() )
-                _rewardsResponse.postValue(null)
+                val response = rewardsRequest?: throw IOException("Response body is null")
+                if (response.isSuccessful)
+                    _rewardsResponse.postValue(
+                        response.body()
+                    )
+            } catch (e: Exception) {
+                Log.e("GET_REWARDS_SERVICE", e.message.toString())
+                _errorResponse.postValue(e.message)
             }
         }
     }
