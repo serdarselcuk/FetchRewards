@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.allfreeapps.fetchrewards.model.Reward
 import com.allfreeapps.fetchrewards.services.ApiPlaceHolder
 import com.allfreeapps.fetchrewards.services.ServiceClient
-import com.allfreeapps.fetchrewards.utils.FetchRewardsConstants.Companion.URL
+import com.allfreeapps.fetchrewards.utils.FetchRewardsConstants.Companion.BASE_URL
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -24,7 +24,7 @@ open class FetchRewardsViewModel : ViewModel() {
 
     fun getRewards() {
         val retrofitClientService =
-            ServiceClient().createRetrofit(URL).create(ApiPlaceHolder::class.java)
+            ServiceClient().createRetrofit(BASE_URL).create(ApiPlaceHolder::class.java)
         viewModelScope.launch {
             val rewardsRequest = retrofitClientService.getRewards()
             try {

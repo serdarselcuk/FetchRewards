@@ -1,7 +1,10 @@
 package com.allfreeapps.fetchrewards.utils
 
+import com.allfreeapps.fetchrewards.BuildConfig
+
 class FetchRewardsConstants {
     companion object {
-        const val URL: String = "https://fetch-hiring.s3.amazonaws.com/"
+        var BASE_URL: String = BuildConfig.API_BASE_URL
     }
+
 }
