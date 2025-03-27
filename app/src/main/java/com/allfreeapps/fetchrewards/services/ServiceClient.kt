@@ -11,7 +11,7 @@ private const val TIMEOUT_SECONDS = 15L
 class ServiceClient {
 
     private val okHttpClient: OkHttpClient by lazy {
-        val loggingInterceptor= HttpLoggingInterceptor().apply {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 

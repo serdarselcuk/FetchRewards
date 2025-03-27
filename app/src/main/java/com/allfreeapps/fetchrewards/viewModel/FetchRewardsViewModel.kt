@@ -11,7 +11,6 @@ import com.allfreeapps.fetchrewards.services.ApiPlaceHolder
 import com.allfreeapps.fetchrewards.services.ServiceClient
 import com.allfreeapps.fetchrewards.utils.FetchRewardsConstants.Companion.URL
 import kotlinx.coroutines.launch
-import retrofit2.awaitResponse
 import java.io.IOException
 
 open class FetchRewardsViewModel : ViewModel() {
@@ -29,7 +28,7 @@ open class FetchRewardsViewModel : ViewModel() {
         viewModelScope.launch {
             val rewardsRequest = retrofitClientService.getRewards()
             try {
-                val response = rewardsRequest?: throw IOException("Response body is null")
+                val response = rewardsRequest ?: throw IOException("Response body is null")
                 if (response.isSuccessful)
                     _rewardsResponse.postValue(
                         response.body()

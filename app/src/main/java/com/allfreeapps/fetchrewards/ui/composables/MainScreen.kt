@@ -32,12 +32,12 @@ class MainScreen {
     fun FetchRewardsApp(
         innerPadding: PaddingValues,
         viewModel: FetchRewardsViewModel
-    ){
+    ) {
         val rewardsResponse: List<Reward>? = viewModel.rewardsResponse.observeAsState().value
         val errorResponse: String? = viewModel.errorResponse.observeAsState().value
 
         Column(
-            modifier= Modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(top = innerPadding.calculateTopPadding()),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,12 +55,12 @@ class MainScreen {
                     Text("Click to see the list")
                 }
             }
-            Box(modifier = Modifier.fillMaxSize()){
+            Box(modifier = Modifier.fillMaxSize()) {
                 if (!rewardsResponse.isNullOrEmpty()) {
                     RewardList(rewardsResponse)
                 } else {
                     Text(
-                        text =  errorResponse?: "No text available",
+                        text = errorResponse ?: "No text available",
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
@@ -90,16 +90,17 @@ class MainScreen {
         }
     }
 
-       @Preview(showBackground = true)
+    @Preview(showBackground = true)
     @Composable
-    fun PreviewFetchRewardsApp(){
+    fun PreviewFetchRewardsApp() {
         My_Theme {
             FetchRewardsApp(innerPadding = PaddingValues(15.dp), viewModel = mockViewModel())
         }
     }
 }
 
-class mockViewModel(): FetchRewardsViewModel(){
+// to use in preview of the app
+class mockViewModel() : FetchRewardsViewModel() {
     val newRewards = listOf(Reward("Reward 1", null, null), Reward("Reward 2", null, null))
     override val errorResponse: MutableLiveData<String> = MutableLiveData("An error occurred")
     override val rewardsResponse: LiveData<List<Reward>?> = MutableLiveData(null)
